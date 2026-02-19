@@ -2,7 +2,7 @@
 <item>
     <version>3.2.9</version>
     <url>https://github.com/GuuhFioriw/ChatBot/releases/download/v3.2.9/ChatBot_3.2.9.exe</url>
-    <changelog>https://github.com/GuuhFioriw/ChatBot/releases/tag/v3.2.9</changelog>
+    <changelog>ATUALIZACAO DISPONIVEL: Melhore a estabilidade do seu ChatBot agora. Siga no Instagram para novidades: https://www.instagram.com/guuh__pv</changelog>
     <mandatory>false</mandatory>
     <args>/SILENT /SP- /NOICONS</args>
 </item>
