@@ -20,7 +20,7 @@ using SeleniumKeys = OpenQA.Selenium.Keys;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using WebDriverManager.Helpers;
-using AutoUpdaterDotNET;
+
 
 namespace ChatBot
 {
@@ -50,10 +50,6 @@ namespace ChatBot
         {
             InitializeComponent();
 
-            // Alterado de 'main' para 'master' para corresponder ao seu repositório
-            AutoUpdater.Start("https://raw.githubusercontent.com/GuuhFioriw/ChatBot/master/update.xml");
-            // -------------------------------
-
             this.Load += new System.EventHandler(this.Painel_Load);
             this.btnAnalisar.Click += new System.EventHandler(this.btnAnalisarPlanilha_Click);
             this.btnEnviarMassa.Click += new System.EventHandler(this.btnEnviarMassa_Click);
@@ -63,8 +59,13 @@ namespace ChatBot
             ConfigurarDicas();
         }
 
+
         private async void Painel_Load(object sender, EventArgs e)
         {
+
+            _ = VerificarAtualizacaoManual();
+
+
             txtHistorico.ReadOnly = true;
             btnEnviarMassa.Enabled = false;
             btnDesconectar.Enabled = false;
@@ -73,18 +74,22 @@ namespace ChatBot
 
             VerificarOperador();
 
-            // --- A MÁGICA PARA A VERSÃO AUTOMÁTICA ---
-            // Isso lê o número da versão que está nas propriedades do seu projeto
-            string versaoReal = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            string versaoReal = System.Reflection.Assembly
+                .GetExecutingAssembly()
+                .GetName()
+                .Version
+                .ToString();
 
             AtualizarHistorico("------------------------------------------");
             AtualizarHistorico("🚀 BEM-VINDO AO CHATBOT!");
             AtualizarHistorico("👨‍💻 Desenvolvido por: Gustavo Rodrigues Fiori");
-            AtualizarHistorico($"⚙️ Versão ChatBot : {versaoReal}"); // Agora usa a variável
+            AtualizarHistorico($"⚙️ Versão ChatBot : {versaoReal}");
             AtualizarHistorico("------------------------------------------");
 
             _ = Task.Run(() => IniciarZapAutomatico());
         }
+
+
 
         private void VerificarOperador()
         {
@@ -819,6 +824,113 @@ namespace ChatBot
 
             toolTip.SetToolTip(btnAnalisar, "Anexe Arquivo Excel apenas com os nomes.");
 
+        }
+
+
+        //Verifica se há uma atualização manual disponível no GitHub e, se houver, oferece para baixar e instalar.
+        private async Task VerificarAtualizacaoManual()
+        {
+            try
+            {
+                string urlXml = "https://raw.githubusercontent.com/GuuhFioriw/ChatBot/master/update.xml";
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.Timeout = TimeSpan.FromSeconds(20);
+                    string xml = await client.GetStringAsync(urlXml);
+
+                    var doc = new System.Xml.XmlDocument();
+                    doc.LoadXml(xml);
+
+                    string versaoOnlineStr = doc.SelectSingleNode("//version")?.InnerText;
+                    string urlDownload = doc.SelectSingleNode("//url")?.InnerText;
+
+                    Version versaoLocal = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                    Version versaoOnline = new Version(versaoOnlineStr);
+
+                    if (versaoOnline > versaoLocal)
+                    {
+                        var result = MessageBox.Show(
+                            $"Nova versão disponível: {versaoOnlineStr}\nDeseja baixar e atualizar agora?",
+                            "Atualização",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Information);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            // 1. Mostrar a barra de progresso
+                            MostrarProgresso();
+                            AtualizarHistorico($"📥 Iniciando download da versão {versaoOnlineStr}...");
+
+                            string caminhoTemp = Path.Combine(Path.GetTempPath(), "ChatBot_Update.exe");
+
+                            // 2. Iniciar download com monitoramento de progresso
+                            using (var response = await client.GetAsync(urlDownload, HttpCompletionOption.ResponseHeadersRead))
+                            {
+                                response.EnsureSuccessStatusCode();
+
+                                var totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                                var canReportProgress = totalBytes != -1;
+
+                                using (var contentStream = await response.Content.ReadAsStreamAsync())
+                                using (var fileStream = new FileStream(caminhoTemp, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
+                                {
+                                    var totalRead = 0L;
+                                    var buffer = new byte[8192];
+                                    var isMoreToRead = true;
+
+                                    do
+                                    {
+                                        var read = await contentStream.ReadAsync(buffer, 0, buffer.Length);
+                                        if (read == 0)
+                                        {
+                                            isMoreToRead = false;
+                                        }
+                                        else
+                                        {
+                                            await fileStream.WriteAsync(buffer, 0, read);
+                                            totalRead += read;
+
+                                            if (canReportProgress)
+                                            {
+                                                // Calcula a porcentagem e atualiza a UI
+                                                int porcentagem = (int)((totalRead * 100) / totalBytes);
+
+                                                // Atualiza a barra e o label na thread principal
+                                                this.Invoke((MethodInvoker)delegate {
+                                                    if (pgbProgresso != null) pgbProgresso.Value = porcentagem;
+                                                    if (lblPorcentagem != null) lblPorcentagem.Text = $"{porcentagem}%";
+                                                });
+                                            }
+                                        }
+                                    } while (isMoreToRead);
+                                }
+                            }
+
+                            AtualizarHistorico("✅ Download concluído! Reiniciando para instalar...");
+                            await Task.Delay(1000);
+
+                            // 3. Executa o instalador
+                            Process.Start(new ProcessStartInfo
+                            {
+                                FileName = caminhoTemp,
+                                Arguments = "/SILENT /NORESTART",
+                                UseShellExecute = true
+                            });
+
+                            Application.Exit();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Se der erro, apenas loga no histórico silenciosamente
+                this.Invoke((MethodInvoker)delegate {
+                    AtualizarHistorico("ℹ️ Não foi possível concluir a atualização automática.");
+                    EsconderProgresso();
+                });
+            }
         }
     }
 }
