@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="BD\Dados.accdb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="BD\Dados.accdb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.5" />
+    <PackageReference Include="QRCoder" Version="1.7.0" />
+    <PackageReference Include="Selenium.Support" Version="4.40.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.40.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="146.0.7680-beta" />
+    <PackageReference Include="Selenium.WebDriver.MSEdgeDriver" Version="145.0.3800.58" />
+    <PackageReference Include="System.Data.OleDb" Version="11.0.0-preview.1.26104.118" />
+    <PackageReference Include="WebDriverManager" Version="2.17.6" />
+    <PackageReference Include="Whatsapp.NET" Version="1.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
