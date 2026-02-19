@@ -2,7 +2,7 @@
 <item>
     <version>3.2.9</version>
     <url>https://github.com/GuuhFioriw/ChatBot/releases/download/v3.2.9/ChatBot_3.2.9.exe</url>
-    <changelog>Nova versao 3.2.9 disponivel! Siga no Instagram: instagram.com/guuh__pv</changelog>
+    <changelog>https://github.com/GuuhFioriw/ChatBot/releases/tag/v3.2.9</changelog>
     <mandatory>false</mandatory>
     <args>/SILENT /SP- /NOICONS</args>
 </item>
