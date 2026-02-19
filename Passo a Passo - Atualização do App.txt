@@ -1,0 +1,67 @@
+============================================================
+          GUIA DE ATUALIZACAO - CHATBOT MICROLINS
+============================================================
+
+------------------------------------------------------------
+PASSO 1: PREPARAR O CODIGO (VISUAL STUDIO)
+------------------------------------------------------------
+
+1. No 'Gerenciador de Solucoes', clique com o botao direito 
+   no projeto "ChatBot" e va em 'Propriedades'.
+
+2. Va na aba 'Pacote' -> Geral -> Versao do Pacote.
+
+3. No campo 'Versao do Pacote', altere para o novo numero.
+   Exemplo: Se era 3.2.8.0, mude para 3.2.9.0.
+
+4. Salve tudo e clique em 'Compilar' > 'Recompilar Solucao'.
+
+------------------------------------------------------------
+PASSO 2: GERAR O INSTALADOR (INNO SETUP)
+------------------------------------------------------------
+
+1. Abra o seu arquivo de script do Inno Setup (.iss).
+
+2. Localize a linha 'AppVersion' e mude para a mesma versao 
+   que voce alterou no Versao do Pacote.
+   Exemplo: AppVersion= 3.2.9.0
+
+3. Clique no botao 'Compile' (Play azul).
+
+4. O novo instalador sera gerado na sua pasta 'Output'.
+
+------------------------------------------------------------
+PASSO 3: SUBIR PARA O GITHUB (RELEASES)
+------------------------------------------------------------
+
+1. No seu GitHub, va na aba 'Releases' e clique em 
+   'Draft a new release'.
+
+2. Crie uma Tag (ex: v3.2.9) e um Titulo (ex: ChatBot v3.2.9).
+
+3. Arraste o arquivo .exe gerado pelo Inno Setup para 
+   dentro do campo 'Assets'.
+
+4. Clique em 'Publish Release'.
+
+5. ATENCAO: Apos publicar, clique com o botao DIREITO no 
+   arquivo .exe que voce subiu e escolha: 
+   "COPIAR ENDERECO DO LINK".
+
+------------------------------------------------------------
+PASSO 4: ATUALIZAR O DISPARADOR (UPDATE.XML)
+------------------------------------------------------------
+
+1. No repositorio do GitHub, abra o arquivo 'update.xml'.
+
+2. Clique no icone do LAPIS (Editar).
+
+3. Atualize as duas informacoes:
+   - <version>: Coloque a versao nova (ex: 3.2.9.0).
+   - <url>: Cole o link que voce copiou no Passo 3.
+
+4. Clique em 'Commit changes' para salvar.
+
+============================================================
+PRONTO! O ChatBot agora avisara os usuarios automaticamente.
+============================================================
