@@ -50,8 +50,8 @@ namespace ChatBot
         {
             InitializeComponent();
 
-            // Ela vai checar se tem versão nova no seu GitHub assim que o app abrir
-            AutoUpdater.Start("https://raw.githubusercontent.com/GuuhFioriw/ChatBot/main/update.xml");
+            // Alterado de 'main' para 'master' para corresponder ao seu repositório
+            AutoUpdater.Start("https://raw.githubusercontent.com/GuuhFioriw/ChatBot/master/update.xml");
             // -------------------------------
 
             this.Load += new System.EventHandler(this.Painel_Load);
