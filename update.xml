@@ -2,19 +2,7 @@
 <item>
     <version>3.2.9</version>
     <url>https://github.com/GuuhFioriw/ChatBot/releases/download/v3.2.9/ChatBot_3.2.9.exe</url>
-    <changelog><![CDATA[
-        <h2 style="color: #2e7d32; font-family: sans-serif;">🚀 Novidades da Versão 3.2.9</h2>
-        <ul style="font-family: sans-serif; line-height: 1.6;">
-            <li><b>Automação Refinada:</b> Melhor estabilidade no envio em massa via WhatsApp.</li>
-            <li><b>Update System:</b> Agora você recebe avisos de novas versões automaticamente.</li>
-            <li><b>Correções:</b> Ajustes na persistência de dados e limpeza de sessão.</li>
-        </ul>
-        <hr />
-        <p style="font-family: sans-serif; font-size: 12px; color: #555;">
-            👨‍💻 Desenvolvido por: <b>Gustavo Rodrigues Fiori</b><br />
-            📸 Siga no Instagram: <a href="https://www.instagram.com/guuh__pv">@guuh__pv</a>
-        </p>
-    ]]></changelog>
+    <changelog>Nova versao 3.2.9 disponivel! Siga no Instagram: instagram.com/guuh__pv</changelog>
     <mandatory>false</mandatory>
     <args>/SILENT /SP- /NOICONS</args>
 </item>
