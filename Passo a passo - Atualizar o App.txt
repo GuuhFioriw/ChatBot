@@ -1,0 +1,38 @@
+Como atualizar o App, Passo a Passo : 
+
+Passo 1 :
+
+-------------------------------------------------------------------------------------------------
+
+Gerenciador de Soluções -> Botão Direito no "ChatBot" -> Propriedades.
+
+Pacote -> Geral -> Versão do Pacote -> Mude para Versão deseja (Exemplo : 3.2.9.0).
+
+-------------------------------------------------------------------------------------------------
+
+Passo 2 : 
+
+-------------------------------------------------------------------------------------------------
+
+Abra o Arquivo do Innon : "script.iss" -> Mude apenas o : (AppVersion "3.2.9") para a Versão que vc coloco no Pacote do App.
+
+Inicie e Crie o .exe -> Output -> Pegue o .exe.
+
+-------------------------------------------------------------------------------------------------
+
+Passo 3 : 
+
+-------------------------------------------------------------------------------------------------
+
+Abra o Repositories "ChatBot" -> Realeses -> Draft a new release.
+
+Tag : Versão do App (Exemplo : v3.2.9)
+
+Release title : ChatBot v3.2.9
+
+Assets : Anexe o arquivo .exe que foi criado com o Innon
+
+Clique em : Publish Realese para publicar a nova versão.
+
+-------------------------------------------------------------------------------------------------
+
