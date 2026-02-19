@@ -20,6 +20,7 @@ using SeleniumKeys = OpenQA.Selenium.Keys;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using WebDriverManager.Helpers;
+using AutoUpdaterDotNET;
 
 namespace ChatBot
 {
@@ -48,6 +49,11 @@ namespace ChatBot
         public FrmPainel()
         {
             InitializeComponent();
+
+            // Ela vai checar se tem versão nova no seu GitHub assim que o app abrir
+            AutoUpdater.Start("https://raw.githubusercontent.com/GuuhFioriw/ChatBot/main/update.xml");
+            // -------------------------------
+
             this.Load += new System.EventHandler(this.Painel_Load);
             this.btnAnalisar.Click += new System.EventHandler(this.btnAnalisarPlanilha_Click);
             this.btnEnviarMassa.Click += new System.EventHandler(this.btnEnviarMassa_Click);
@@ -65,15 +71,18 @@ namespace ChatBot
             EsconderProgresso();
             AtualizarStatusVisual("Iniciando...", Color.Gray);
 
-            // --- CHAMADA DA FUNÇÃO AQUI ---
             VerificarOperador();
-            // ------------------------------
+
+            // --- A MÁGICA PARA A VERSÃO AUTOMÁTICA ---
+            // Isso lê o número da versão que está nas propriedades do seu projeto
+            string versaoReal = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             AtualizarHistorico("------------------------------------------");
             AtualizarHistorico("🚀 BEM-VINDO AO CHATBOT!");
             AtualizarHistorico("👨‍💻 Desenvolvido por: Gustavo Rodrigues Fiori");
-            AtualizarHistorico("⚙️ Versão ChatBot : 3.2.7");
+            AtualizarHistorico($"⚙️ Versão ChatBot : {versaoReal}"); // Agora usa a variável
             AtualizarHistorico("------------------------------------------");
+
             _ = Task.Run(() => IniciarZapAutomatico());
         }
 
