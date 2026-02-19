@@ -3,9 +3,8 @@
   <version>3.2.9.0</version>
   <url>https://github.com/GuuhFioriw/ChatBot/releases/download/v3.2.9/ChatBot_3.2.9.exe</url>
   <changelog>
-NOVIDADES DA VERSAO 3.2.9.0:
-- Melhorias na estabilidade do envio.
-- Correcao de bugs de conexao.
+Correções e melhorias.
   </changelog>
   <mandatory>false</mandatory>
+  <args>/VERYSILENT /SUPPRESSMSGBOXES /NORESTART</args>
 </item>
