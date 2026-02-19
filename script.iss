@@ -1,6 +1,6 @@
 #define AppName "ChatBot"
 #define AppExeName "ChatBot.exe"
-#define AppVersion "3.2.7"
+#define AppVersion "3.2.9"
 
 [Setup]
 AppId={{B7F0D9B6-9C5F-4C3E-9F01-CHATBOT2026}
